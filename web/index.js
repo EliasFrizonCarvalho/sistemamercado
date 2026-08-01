@@ -1,11 +1,9 @@
-const apiBase = '/api';
+const STORAGE_PRODUCTS = 'mercado_demo_products';
 const searchInput = document.getElementById('homeSearch');
 const searchButton = document.getElementById('searchButton');
 const clearSearchButton = document.getElementById('clearSearch');
-const serverStatus = document.getElementById('serverStatus');
 const resultCount = document.getElementById('resultCount');
 const searchResults = document.getElementById('searchResults');
-let produtos = [];
 
 const categorias = {
     1: 'Mercearia',
@@ -14,37 +12,37 @@ const categorias = {
     4: 'Hortifruti'
 };
 
-async function fetchProdutos() {
-    try {
-        const res = await fetch(`${apiBase}/produtos`);
-        if (!res.ok) {
-            throw new Error('Falha ao carregar produtos');
-        }
-        produtos = await res.json();
-        serverStatus.textContent = 'Servidor: online';
-        serverStatus.style.color = '#1d4ed8';
-        return produtos;
-    } catch (error) {
-        serverStatus.textContent = 'Servidor: offline';
-        serverStatus.style.color = '#991b1b';
-        produtos = [];
-        return [];
-    }
+const defaultProducts = [
+    { id: 1, nome: 'Arroz Integral 5kg', categoriaId: 1, preco: 29.90, estoque: 28, estoqueMinimo: 8 },
+    { id: 2, nome: 'Refrigerante Cola 2L', categoriaId: 2, preco: 12.50, estoque: 14, estoqueMinimo: 5 },
+    { id: 3, nome: 'Detergente Líquido 500ml', categoriaId: 3, preco: 5.70, estoque: 22, estoqueMinimo: 6 },
+    { id: 4, nome: 'Banana Nanica 1kg', categoriaId: 4, preco: 7.80, estoque: 16, estoqueMinimo: 8 },
+    { id: 5, nome: 'Pão de Forma Integral', categoriaId: 1, preco: 10.40, estoque: 11, estoqueMinimo: 4 },
+    { id: 6, nome: 'Leite Integral 1L', categoriaId: 1, preco: 6.25, estoque: 19, estoqueMinimo: 6 }
+];
+
+function getProducts() {
+    const stored = localStorage.getItem(STORAGE_PRODUCTS);
+    return stored ? JSON.parse(stored) : defaultProducts;
+}
+
+function saveProducts(products) {
+    localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products));
 }
 
 function formatCurrency(value) {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
 }
 
-function renderResults(lista, query) {
+function renderResults(produtos, query) {
     searchResults.innerHTML = '';
-    if (!lista.length) {
-        resultCount.textContent = query ? 'Nenhum produto encontrado.' : 'Digite algo para pesquisar produtos.';
+    if (!produtos.length) {
+        resultCount.textContent = query ? `Nenhum produto encontrado para “${query}”.` : 'Digite para buscar produtos.';
         return;
     }
 
-    resultCount.textContent = `Mostrando ${lista.length} produto(s) para “${query}”.`;
-    lista.forEach(produto => {
+    resultCount.textContent = `Mostrando ${produtos.length} produto(s) para “${query}”.`;
+    produtos.forEach(produto => {
         const item = document.createElement('article');
         item.className = 'result-card';
         item.innerHTML = `
@@ -55,43 +53,42 @@ function renderResults(lista, query) {
     });
 }
 
-function filterProdutos(query) {
-    const texto = query.trim().toLowerCase();
-    if (!texto) {
-        renderResults([], '');
+function searchProducts() {
+    const query = searchInput.value.trim().toLowerCase();
+    const produtos = getProducts();
+    if (!query) {
+        renderResults(produtos.slice(0, 4), 'destaque');
         return;
     }
-    const resultados = produtos.filter(produto => {
+
+    const results = produtos.filter(produto => {
         const nome = produto.nome.toLowerCase();
-        const categoria = categorias[produto.categoriaId]?.toLowerCase() || '';
-        return nome.includes(texto)
-            || categoria.includes(texto)
-            || produto.id.toString() === texto;
+        const categoria = (categorias[produto.categoriaId] || '').toLowerCase();
+        return nome.includes(query)
+            || categoria.includes(query)
+            || produto.id.toString() === query;
     });
-    renderResults(resultados, query);
+
+    renderResults(results, query);
 }
 
-async function search() {
-    await fetchProdutos();
-    filterProdutos(searchInput.value);
-}
-
-function resetSearch() {
+function clearSearch() {
     searchInput.value = '';
-    searchResults.innerHTML = '';
-    resultCount.textContent = 'Digite algo para pesquisar produtos.';
+    renderResults(getProducts().slice(0, 4), 'destaque');
 }
 
-searchButton.addEventListener('click', search);
-clearSearchButton.addEventListener('click', resetSearch);
+searchButton.addEventListener('click', searchProducts);
+clearSearchButton.addEventListener('click', clearSearch);
 searchInput.addEventListener('keydown', event => {
     if (event.key === 'Enter') {
         event.preventDefault();
-        search();
+        searchProducts();
     }
 });
 
-window.addEventListener('load', async () => {
-    await fetchProdutos();
-    resetSearch();
+window.addEventListener('load', () => {
+    if (!localStorage.getItem(STORAGE_PRODUCTS)) {
+        saveProducts(defaultProducts);
+    }
+    clearSearch();
 });
