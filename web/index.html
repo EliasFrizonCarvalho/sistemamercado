@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="home-header">
+        <div class="home-brand">
+            <span>Mercado</span>
+        </div>
+        <nav class="home-nav">
+            <a href="dashboard.html">Painel</a>
+            <a href="https://www.google.com.br" target="_blank" rel="noreferrer">Google</a>
+        </nav>
+    </header>
+
+    <main class="home-main">
+        <div class="home-copy">
+            <div class="home-logo">Mercado</div>
+            <p class="home-tagline">Um site de portfólio para gestão de produtos, estoque e vendas.</p>
+
+            <div class="search-card">
+                <input id="homeSearch" type="search" placeholder="Pesquisar produto, categoria ou ID..." autocomplete="off">
+                <div class="search-actions">
+                    <button id="searchButton">Pesquisar</button>
+                    <button id="clearSearch" class="secondary">Limpar</button>
+                </div>
+            </div>
+
+            <div class="home-status">
+                <span id="serverStatus">Servidor: offline</span>
+                <span id="resultCount">Digite algo para pesquisar produtos.</span>
+            </div>
+
+            <div id="searchResults" class="search-results"></div>
+
+            <div class="home-links">
+                <a href="dashboard.html">Abrir painel de gestão</a>
+                <a href="https://www.google.com.br" target="_blank" rel="noreferrer">Ver exemplo Google</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="home-footer">
+        <span>App web Java + SQLite</span>
+        <span>Servidor em <code>http://localhost:8080</code></span>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>

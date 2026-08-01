@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Gestão - Mercado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <h1>Painel de Gestão</h1>
+            <p>Cadastre produtos, registre vendas e monitore o estoque do mercado.</p>
+        </div>
+        <div class="panel-actions">
+            <a href="index.html">Voltar ao site</a>
+        </div>
+    </header>
+
+    <main class="layout">
+        <section class="panel panel--wide">
+            <div class="panel-header">
+                <h2>Produtos</h2>
+                <div class="panel-actions">
+                    <button id="refreshProducts">Atualizar</button>
+                </div>
+            </div>
+            <div class="panel-content">
+                <table class="table" id="productTable">
+                    <thead>
+                        <tr><th>ID</th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Mínimo</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header"><h2>Novo Produto</h2></div>
+            <div class="panel-content form-grid">
+                <label>Nome<input type="text" id="productName"></label>
+                <label>Categoria<select id="productCategory">
+                    <option value="1">Mercearia</option>
+                    <option value="2">Bebidas</option>
+                    <option value="3">Limpeza</option>
+                    <option value="4">Hortifruti</option>
+                </select></label>
+                <label>Preço<input type="number" id="productPrice" step="0.01" min="0"></label>
+                <label>Estoque<input type="number" id="productStock" min="0" value="0"></label>
+                <label>Estoque mínimo<input type="number" id="productMinStock" min="0" value="5"></label>
+                <button id="saveProduct" class="full-width">Salvar produto</button>
+            </div>
+        </section>
+
+        <section class="panel panel--wide">
+            <div class="panel-header"><h2>Registrar Venda</h2></div>
+            <div class="panel-content form-grid">
+                <label>ID do produto<input type="number" id="saleProductId" min="1"></label>
+                <label>Quantidade<input type="number" id="saleQuantity" min="1" value="1"></label>
+                <button id="addSaleItem">Adicionar item</button>
+                <div class="sale-items">
+                    <h3>Itens da venda</h3>
+                    <ol id="saleList"></ol>
+                </div>
+                <div class="sale-summary">
+                    <p>Total: <strong id="saleTotal">R$ 0,00</strong></p>
+                    <button id="finalizeSale">Finalizar venda</button>
+                    <button id="cleanSale" class="secondary">Limpar carrinho</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header"><h2>Relatórios</h2></div>
+            <div class="panel-content">
+                <div class="report-card">
+                    <div><strong>Total vendido hoje</strong></div>
+                    <div class="report-value" id="todayTotal">R$ 0,00</div>
+                </div>
+                <div class="report-card report-card--warning">
+                    <div><strong>Estoque baixo</strong></div>
+                    <div id="lowStockCount">0 produtos</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <span>App web Java + SQLite para portfólio.</span>
+        <span>Use o servidor em <code>http://localhost:8080</code>.</span>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Build artifacts
+out/
+*.jar
+
+# Database files
+*.db
+
+# IDE and runtime files
+*.log
+*.tmp
+*.class
+
+# Windows files
+Thumbs.db
+.DS_Store
