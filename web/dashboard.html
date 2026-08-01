@@ -3,29 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Gestão - Mercado</title>
+    <title>Painel de Gestão — Mercado</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dashboard-page">
     <header class="topbar">
-        <div>
-            <h1>Painel de Gestão</h1>
-            <p>Cadastre produtos, registre vendas e monitore o estoque do mercado.</p>
+        <div class="brand">
+            <span class="brand-logo">Painel Mercado</span>
+            <span class="brand-subtitle">Gerencie produtos e vendas no navegador</span>
         </div>
-        <div class="panel-actions">
-            <a href="index.html">Voltar ao site</a>
-        </div>
+        <nav class="nav-links">
+            <a class="nav-link button-secondary" href="index.html">Voltar ao site</a>
+        </nav>
     </header>
 
-    <main class="layout">
-        <section class="panel panel--wide">
-            <div class="panel-header">
+    <main class="dashboard-grid">
+        <section class="dashboard-panel">
+            <header>
                 <h2>Produtos</h2>
-                <div class="panel-actions">
-                    <button id="refreshProducts">Atualizar</button>
+            </header>
+            <div class="panel-body">
+                <div class="form-grid">
+                    <label>Buscar produto
+                        <input id="searchProduct" type="search" placeholder="Nome, categoria ou ID...">
+                    </label>
+                    <button id="refreshProducts" class="button button-secondary">Atualizar lista</button>
                 </div>
-            </div>
-            <div class="panel-content">
                 <table class="table" id="productTable">
                     <thead>
                         <tr><th>ID</th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Mínimo</th></tr>
@@ -35,9 +38,9 @@
             </div>
         </section>
 
-        <section class="panel">
-            <div class="panel-header"><h2>Novo Produto</h2></div>
-            <div class="panel-content form-grid">
+        <section class="dashboard-panel">
+            <header><h2>Novo Produto</h2></header>
+            <div class="panel-body form-grid">
                 <label>Nome<input type="text" id="productName"></label>
                 <label>Categoria<select id="productCategory">
                     <option value="1">Mercearia</option>
@@ -48,31 +51,31 @@
                 <label>Preço<input type="number" id="productPrice" step="0.01" min="0"></label>
                 <label>Estoque<input type="number" id="productStock" min="0" value="0"></label>
                 <label>Estoque mínimo<input type="number" id="productMinStock" min="0" value="5"></label>
-                <button id="saveProduct" class="full-width">Salvar produto</button>
+                <button id="saveProduct" class="button primary full-width">Salvar produto</button>
             </div>
         </section>
 
-        <section class="panel panel--wide">
-            <div class="panel-header"><h2>Registrar Venda</h2></div>
-            <div class="panel-content form-grid">
+        <section class="dashboard-panel">
+            <header><h2>Registrar Venda</h2></header>
+            <div class="panel-body form-grid">
                 <label>ID do produto<input type="number" id="saleProductId" min="1"></label>
                 <label>Quantidade<input type="number" id="saleQuantity" min="1" value="1"></label>
-                <button id="addSaleItem">Adicionar item</button>
+                <button id="addSaleItem" class="button primary">Adicionar item</button>
                 <div class="sale-items">
                     <h3>Itens da venda</h3>
                     <ol id="saleList"></ol>
                 </div>
                 <div class="sale-summary">
                     <p>Total: <strong id="saleTotal">R$ 0,00</strong></p>
-                    <button id="finalizeSale">Finalizar venda</button>
-                    <button id="cleanSale" class="secondary">Limpar carrinho</button>
+                    <button id="finalizeSale" class="button primary">Finalizar venda</button>
+                    <button id="cleanSale" class="button button-secondary">Limpar carrinho</button>
                 </div>
             </div>
         </section>
 
-        <section class="panel">
-            <div class="panel-header"><h2>Relatórios</h2></div>
-            <div class="panel-content">
+        <section class="dashboard-panel">
+            <header><h2>Relatórios</h2></header>
+            <div class="panel-body">
                 <div class="report-card">
                     <div><strong>Total vendido hoje</strong></div>
                     <div class="report-value" id="todayTotal">R$ 0,00</div>
@@ -81,13 +84,16 @@
                     <div><strong>Estoque baixo</strong></div>
                     <div id="lowStockCount">0 produtos</div>
                 </div>
+                <div class="report-card">
+                    <div><strong>Status</strong></div>
+                    <p id="dashboardStatus">Dados salvos no navegador. Atualize a página para recarregar.</p>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <span>App web Java + SQLite para portfólio.</span>
-        <span>Use o servidor em <code>http://localhost:8080</code>.</span>
+    <footer class="page-footer">
+        <p>Este painel funciona como demo estático. Dados armazenados no navegador.</p>
     </footer>
 
     <script src="app.js"></script>

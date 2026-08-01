@@ -3,50 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mercado</title>
+    <title>Mercado — Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header class="home-header">
-        <div class="home-brand">
-            <span>Mercado</span>
+<body class="home-page">
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-logo">Mercado</span>
+            <span class="brand-subtitle">Demo estático para portfólio</span>
         </div>
-        <nav class="home-nav">
-            <a href="dashboard.html">Painel</a>
-            <a href="https://www.google.com.br" target="_blank" rel="noreferrer">Google</a>
+        <nav class="nav-links">
+            <a class="nav-link" href="dashboard.html">Painel</a>
+            <a class="nav-link" href="https://www.google.com.br" target="_blank" rel="noreferrer">Google</a>
         </nav>
     </header>
 
-    <main class="home-main">
-        <div class="home-copy">
-            <div class="home-logo">Mercado</div>
-            <p class="home-tagline">Um site de portfólio para gestão de produtos, estoque e vendas.</p>
+    <main class="home-hero">
+        <div class="hero-copy">
+            <h1>Construa um mercado online moderno</h1>
+            <p>Procure produtos, veja demonstrações de estoque e abra o painel de gestão.</p>
 
-            <div class="search-card">
+            <div class="hero-search">
                 <input id="homeSearch" type="search" placeholder="Pesquisar produto, categoria ou ID..." autocomplete="off">
-                <div class="search-actions">
-                    <button id="searchButton">Pesquisar</button>
-                    <button id="clearSearch" class="secondary">Limpar</button>
-                </div>
+                <button id="searchButton" class="primary">Buscar</button>
             </div>
 
-            <div class="home-status">
-                <span id="serverStatus">Servidor: offline</span>
-                <span id="resultCount">Digite algo para pesquisar produtos.</span>
+            <div class="hero-actions">
+                <a class="button button-secondary" href="dashboard.html">Acessar painel</a>
+                <button id="clearSearch" class="button button-tertiary">Limpar busca</button>
             </div>
 
-            <div id="searchResults" class="search-results"></div>
+            <div class="home-meta">
+                <span id="resultCount">Digite para buscar produtos.</span>
+                <span class="badge">Dados locais no navegador</span>
+            </div>
+        </div>
 
-            <div class="home-links">
-                <a href="dashboard.html">Abrir painel de gestão</a>
-                <a href="https://www.google.com.br" target="_blank" rel="noreferrer">Ver exemplo Google</a>
+        <div class="hero-preview">
+            <div class="preview-card">
+                <h2>Produtos em destaque</h2>
+                <div id="searchResults" class="search-results"></div>
             </div>
         </div>
     </main>
 
-    <footer class="home-footer">
-        <span>App web Java + SQLite</span>
-        <span>Servidor em <code>http://localhost:8080</code></span>
+    <section class="home-highlights">
+        <div class="highlight-card">
+            <h3>UX suave</h3>
+            <p>Interface moderna, responsiva e pronta para Netlify.</p>
+        </div>
+        <div class="highlight-card">
+            <h3>Dados locais</h3>
+            <p>Sem backend necessário: o site roda completamente no navegador.</p>
+        </div>
+        <div class="highlight-card">
+            <h3>Painel administrativo</h3>
+            <p>Cadastra produtos, registra vendas e acompanha o estoque.</p>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+        <p>Site estático deployável no Netlify. O painel roda em <code>dashboard.html</code>.</p>
     </footer>
 
     <script src="index.js"></script>
